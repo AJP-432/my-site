@@ -9,5 +9,10 @@
 	"typescript.preferences.importModuleSpecifier": "relative",
 	"files.associations": {
 		"*.css": "tailwindcss"
-	}
+	},
+	"github.copilot.chat.codeGeneration.instructions": [
+		{ "file": "./.vscode/prompts/svelte5.txt" },
+		{ "file": "./.vscode/prompts/tailwindv4.txt" },
+		{ "file": "./.vscode/prompts/daisyui.md" }
+	]
 }
