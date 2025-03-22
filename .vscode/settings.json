@@ -6,5 +6,10 @@
 		"**/.git": true,
 		"**/.DS_Store": true
 	},
-	"typescript.preferences.importModuleSpecifier": "relative"
+	"typescript.preferences.importModuleSpecifier": "relative",
+	"github.copilot.chat.codeGeneration.instructions": [
+		{ "file": "./.vscode/prompts/svelte5.txt" },
+		{ "file": "./.vscode/prompts/tailwindv4.txt" },
+		{ "file": "./.vscode/prompts/daisyui.md" }
+	]
 }
