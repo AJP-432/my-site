@@ -9,27 +9,31 @@
 	let { sections }: { sections: string[] } = $props();
 
 	function scrollToSection(id: string) {
-		document.getElementById(id)?.scrollIntoView({
-			behavior: 'smooth'
-		});
+		setTimeout(() => {
+			document.getElementById(id)?.scrollIntoView({
+				behavior: 'smooth'
+			});
+		}, 200);
 	}
 
 	function scrollToTop() {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		});
+		setTimeout(() => {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		}, 200);
 	}
 
 	let mobileMenuOpen = $state(false);
 
 	function handleMobileLinkClick(sectionId: string) {
+		mobileMenuOpen = false; // Close the menu immediately
 		scrollToSection(sectionId);
-		mobileMenuOpen = false; // Close the menu after clicking a link
 	}
 </script>
 
-<header class="bg-background/80 border-border sticky top-0 z-50 border-b p-4 backdrop-blur-sm">
+<header class="bg-background/80 border-border top-0 z-50 border-b p-4 backdrop-blur-sm">
 	<nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-2">
 		<!-- Logo and Title -->
 		<a
