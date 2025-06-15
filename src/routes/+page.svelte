@@ -4,10 +4,10 @@
 	import Footer from '$lib/components/Footer.svelte';
 </script>
 
-<div class="flex min-h-screen flex-col">
+<div class="flex h-screen flex-col">
 	<Header sections={['about']} />
 
-	<main class="flex-1">
+	<main class="flex-1 overflow-hidden">
 		<About />
 	</main>
 

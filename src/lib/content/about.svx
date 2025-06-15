@@ -1,5 +1,11 @@
+<script>
+    import IPAPronunciation from '$lib/components/IPAPronunciation.svelte';
+</script>
+
 # Wassup 🤘🏽
 
-My name is Ajlal (ɪdʒˈlɑːl) and I am a Computer Science student at the [University of Waterloo](https://cs.uwaterloo.ca/).
+My name is Ajlal <IPAPronunciation ipa="ɪdʒˈlɑːl" text="Ajlal" audioSrc="/ajlal-pronunciation.mp3" /> and I am a CS student at the [University of Waterloo](https://cs.uwaterloo.ca/).
+
+I am passionate about building impactful software that solves important problems. 
 
 *Fun Fact: The name Ajlal is of Arabic origin, and means **Majestic**!*
