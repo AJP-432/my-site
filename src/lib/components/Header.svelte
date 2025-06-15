@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
+	import * as Popover from '$lib/components/ui/popover/index.js';
+
 	import ThemeButton from './ui/ThemeButton.svelte';
 	import HamburgerButton from './ui/HamburgerButton.svelte';
+
+	let { sections }: { sections: string[] } = $props();
 
 	function scrollToSection(id: string) {
 		document.getElementById(id)?.scrollIntoView({
@@ -9,12 +13,34 @@
 		});
 	}
 
-	let { sections }: { sections: string[] } = $props();
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	}
+
+	let mobileMenuOpen = $state(false);
+
+	function handleMobileLinkClick(sectionId: string) {
+		scrollToSection(sectionId);
+		mobileMenuOpen = false; // Close the menu after clicking a link
+	}
 </script>
 
 <header class="bg-background/80 border-border sticky top-0 z-50 border-b p-4 backdrop-blur-sm">
 	<nav class="container mx-auto flex items-center justify-between px-4 py-2">
-		<h1 class="text-2xl font-bold">MY_SITE.exe</h1>
+		<a
+			href="/"
+			onclick={(event) => {
+				event.preventDefault();
+				scrollToTop();
+			}}
+			class="text-2xl font-bold"
+			aria-label="Scroll to top of page"
+		>
+			MY_SITE.exe
+		</a>
 
 		<div class="hidden items-center space-x-4 md:flex">
 			{#each sections as section (section)}
@@ -27,7 +53,27 @@
 		</div>
 
 		<div class="md:hidden">
-			<HamburgerButton onclick={() => console.log('hello')} />
+			<Popover.Root bind:open={mobileMenuOpen}>
+				{/* @ts-expect-error asChild giving lots of type issues, hard to fix; may revisit */ null}
+				<Popover.Trigger asChild>
+					<HamburgerButton />
+				</Popover.Trigger>
+				<Popover.Content class="w-32 p-2">
+					<div class="flex flex-col items-center space-y-2">
+						{#each sections as section (section)}
+							<Button
+								class="w-full"
+								variant="outline"
+								onclick={() => handleMobileLinkClick(section)}
+							>
+								{section.charAt(0).toUpperCase() + section.slice(1)}
+							</Button>
+						{/each}
+
+						<ThemeButton class="w-full" />
+					</div>
+				</Popover.Content>
+			</Popover.Root>
 		</div>
 	</nav>
 </header>

@@ -4,9 +4,11 @@
 
 	import { toggleMode } from 'mode-watcher';
 	import { Button } from '$lib/components/ui/button/index.js';
+
+	let { ...props } = $props();
 </script>
 
-<Button onclick={toggleMode} variant="outline" size="icon">
+<Button onclick={toggleMode} variant="outline" size="icon" {...props}>
 	<SunIcon
 		class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
 	/>
