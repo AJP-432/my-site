@@ -120,7 +120,6 @@
 	}
 }
 
-// Get rid of the default cursor (using a custom cursor)
-body {
+* {
 	cursor: none !important;
 }
