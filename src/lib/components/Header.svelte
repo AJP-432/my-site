@@ -4,6 +4,7 @@
 
 	import ThemeButton from './ui/ThemeButton.svelte';
 	import HamburgerButton from './ui/HamburgerButton.svelte';
+	import { userConfig } from '$lib/config/userConfig';
 
 	let { sections }: { sections: string[] } = $props();
 
@@ -30,6 +31,7 @@
 
 <header class="bg-background/80 border-border sticky top-0 z-50 border-b p-4 backdrop-blur-sm">
 	<nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-2">
+		<!-- Logo and Title -->
 		<a
 			href="/"
 			onclick={(event) => {
@@ -39,9 +41,10 @@
 			class="text-2xl font-bold"
 			aria-label="Scroll to top of page"
 		>
-			MY_SITE.exe
+			{userConfig.site.title}
 		</a>
 
+		<!-- Desktop Navigation Links -->
 		<div class="hidden items-center space-x-4 md:flex">
 			{#each sections as section (section)}
 				<Button variant="ghost" onclick={() => scrollToSection(section)}>
@@ -52,6 +55,7 @@
 			<ThemeButton />
 		</div>
 
+		<!-- Mobile Hamburger Menu -->
 		<div class="md:hidden">
 			<Popover.Root bind:open={mobileMenuOpen}>
 				{/* @ts-expect-error asChild giving lots of type issues, hard to fix; may revisit */ null}

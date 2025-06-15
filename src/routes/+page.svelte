@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 </script>
 
 <div class="flex min-h-screen flex-col">
@@ -29,7 +30,5 @@
 		</section>
 	</main>
 
-	<footer class="text-muted-foreground p-8 text-center">
-		<p>&copy; {new Date().getFullYear()} MY_SITE.exe</p>
-	</footer>
+	<Footer />
 </div>
