@@ -29,7 +29,7 @@
 </script>
 
 <header class="bg-background/80 border-border sticky top-0 z-50 border-b p-4 backdrop-blur-sm">
-	<nav class="container mx-auto flex items-center justify-between px-4 py-2">
+	<nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-2">
 		<a
 			href="/"
 			onclick={(event) => {
