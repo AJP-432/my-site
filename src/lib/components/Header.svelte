@@ -44,7 +44,7 @@
 
 		<div class="hidden items-center space-x-4 md:flex">
 			{#each sections as section (section)}
-				<Button variant="link" onclick={() => scrollToSection(section)}>
+				<Button variant="ghost" onclick={() => scrollToSection(section)}>
 					{section.charAt(0).toUpperCase() + section.slice(1)}
 				</Button>
 			{/each}
@@ -70,7 +70,7 @@
 							</Button>
 						{/each}
 
-						<ThemeButton class="w-full" />
+						<ThemeButton class="w-full" variant="outline" />
 					</div>
 				</Popover.Content>
 			</Popover.Root>

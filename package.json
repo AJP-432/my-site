@@ -66,6 +66,7 @@
 		]
 	},
 	"dependencies": {
+		"curseur": "^0.0.8",
 		"mode-watcher": "^1.0.8"
 	}
 }
