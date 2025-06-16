@@ -17,7 +17,7 @@
 
 			<!-- Right: 3D object area -->
 			<div class="flex h-64 items-center justify-center">
-				<span class="text-muted-foreground">3D Object Placeholder</span>
+				<span class="text-muted-foreground">Going to add something cool...</span>
 			</div>
 		</div>
 
