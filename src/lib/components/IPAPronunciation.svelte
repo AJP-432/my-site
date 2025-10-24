@@ -59,7 +59,6 @@
 	class:playing={isPlaying}
 	title="Click to hear pronunciation"
 	disabled={isPlaying}
-	hover
 >
 	({ipa})
 </button>
