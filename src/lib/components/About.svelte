@@ -1,5 +1,6 @@
 <script lang="ts">
 	import AboutContent from '$lib/content/about.svx';
+	import SpotifyNowPlaying from './SpotifyNowPlaying.svelte';
 </script>
 
 <section id="about" class="flex h-full items-start justify-center p-6 pt-16">
@@ -15,9 +16,9 @@
 				</div>
 			</div>
 
-			<!-- Right: 3D object area -->
+			<!-- Right: Spotify Now Playing -->
 			<div class="flex h-64 items-center justify-center">
-				<span class="text-muted-foreground">Going to add something cool...</span>
+				<SpotifyNowPlaying />
 			</div>
 		</div>
 
@@ -27,6 +28,9 @@
 				<div class="flex flex-col space-y-3">
 					<div class="space-y-3 text-left">
 						<AboutContent />
+					</div>
+					<div class="mt-6 flex justify-center">
+						<SpotifyNowPlaying />
 					</div>
 				</div>
 			</div>
