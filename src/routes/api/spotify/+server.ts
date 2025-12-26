@@ -9,7 +9,7 @@ import {
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing';
 
-async function getAccessToken(): Promise<{ access_token: string }> {
+async function getAccessToken(): Promise<{ access_token: string } | null> {
 	const basic = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64');
 
 	const response = await fetch(TOKEN_ENDPOINT, {
@@ -24,6 +24,11 @@ async function getAccessToken(): Promise<{ access_token: string }> {
 		})
 	});
 
+	if (!response.ok) {
+		console.error('Failed to get access token:', response.status, response.statusText);
+		return null;
+	}
+
 	return response.json();
 }
 
@@ -37,7 +42,11 @@ async function getNowPlaying(accessToken: string) {
 
 export const GET: RequestHandler = async () => {
 	try {
-		const { access_token } = await getAccessToken();
+		const tokenResult = await getAccessToken();
+		if (!tokenResult) {
+			return json({ isPlaying: false });
+		}
+		const { access_token } = tokenResult;
 		const response = await getNowPlaying(access_token);
 
 		if (response.status === 204 || response.status > 400) {

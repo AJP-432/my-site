@@ -1,8 +1,23 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+
 	let { ipa, text, audioSrc }: { ipa: string; text?: string; audioSrc?: string } = $props();
 
 	let isPlaying = $state(false);
 	let currentAudio: HTMLAudioElement | null = null;
+
+	// Cleanup on component destroy to prevent memory leaks
+	onDestroy(() => {
+		if (currentAudio) {
+			currentAudio.pause();
+			currentAudio.src = '';
+			currentAudio = null;
+		}
+		if (typeof speechSynthesis !== 'undefined') {
+			speechSynthesis.cancel();
+		}
+		isPlaying = false;
+	});
 
 	function playAudio() {
 		if (isPlaying) return; // Prevent multiple plays

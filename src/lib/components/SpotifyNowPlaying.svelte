@@ -30,7 +30,7 @@
 	onMount(() => {
 		fetchNowPlaying();
 		// Refresh every 30 seconds
-		intervalId = setInterval(fetchNowPlaying, 30000); // Refresh every 30 seconds
+		intervalId = setInterval(fetchNowPlaying, 30000);
 	});
 
 	onDestroy(() => {
@@ -50,47 +50,47 @@
 		/>
 	</svg>
 
-	{#if loading}
-		<!-- Loading skeleton -->
-		<div class="flex min-w-0 flex-1 items-center gap-3">
+	<div class="flex h-10 min-w-0 flex-1 items-center gap-3">
+		{#if loading}
+			<!-- Loading skeleton -->
 			<div class="bg-muted h-10 w-10 shrink-0 animate-pulse rounded-md"></div>
 			<div class="min-w-0 flex-1">
 				<div class="bg-muted mb-1.5 h-3 w-3/4 animate-pulse rounded"></div>
 				<div class="bg-muted h-2.5 w-1/2 animate-pulse rounded"></div>
 			</div>
-		</div>
-	{:else if data.isPlaying && data.albumImageUrl}
-		<!-- Now playing -->
-		<a
-			href={data.songUrl}
-			target="_blank"
-			rel="noopener noreferrer"
-			class="flex min-w-0 flex-1 items-center gap-3 transition-opacity hover:opacity-80"
-		>
-			<img
-				src={data.albumImageUrl}
-				alt={data.album || 'Album cover'}
-				class="h-10 w-10 shrink-0 rounded-md"
-			/>
-			<div class="min-w-0 flex-1">
-				<p class="text-foreground truncate text-sm font-medium">
-					{data.title}
-				</p>
-				<p class="text-muted-foreground truncate text-xs">
-					{data.artist}
-				</p>
-			</div>
-			<!-- Animated equalizer bars -->
-			<div class="flex h-4 items-end gap-0.5">
-				<span class="equalizer-bar w-0.5 rounded-full bg-[#1DB954]"></span>
-				<span class="equalizer-bar animation-delay-200 w-0.5 rounded-full bg-[#1DB954]"></span>
-				<span class="equalizer-bar animation-delay-400 w-0.5 rounded-full bg-[#1DB954]"></span>
-			</div>
-		</a>
-	{:else}
-		<!-- Not playing -->
-		<p class="text-muted-foreground text-sm">Not playing</p>
-	{/if}
+		{:else if data.isPlaying && data.albumImageUrl}
+			<!-- Now playing -->
+			<a
+				href={data.songUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex min-w-0 flex-1 items-center gap-3 transition-opacity hover:opacity-80"
+			>
+				<img
+					src={data.albumImageUrl}
+					alt={data.album || 'Album cover'}
+					class="h-10 w-10 shrink-0 rounded-md"
+				/>
+				<div class="min-w-0 flex-1">
+					<p class="text-foreground truncate text-sm font-medium">
+						{data.title}
+					</p>
+					<p class="text-muted-foreground truncate text-xs">
+						{data.artist}
+					</p>
+				</div>
+				<!-- Animated equalizer bars -->
+				<div class="flex h-4 items-end gap-0.5">
+					<span class="equalizer-bar w-0.5 rounded-full bg-[#1DB954]"></span>
+					<span class="equalizer-bar animation-delay-200 w-0.5 rounded-full bg-[#1DB954]"></span>
+					<span class="equalizer-bar animation-delay-400 w-0.5 rounded-full bg-[#1DB954]"></span>
+				</div>
+			</a>
+		{:else}
+			<!-- Not playing -->
+			<p class="text-muted-foreground text-sm">He's not listening...</p>
+		{/if}
+	</div>
 </div>
 
 <style>
