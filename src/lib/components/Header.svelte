@@ -62,8 +62,9 @@
 		<!-- Mobile Hamburger Menu -->
 		<div class="md:hidden">
 			<Popover.Root bind:open={mobileMenuOpen}>
-				{/* @ts-expect-error asChild giving lots of type issues, hard to fix; may revisit */ null}
-				<Popover.Trigger asChild>
+				<Popover.Trigger
+					class="border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-9 w-9 items-center justify-center rounded-md border p-2"
+				>
 					<HamburgerButton />
 				</Popover.Trigger>
 				<Popover.Content class="w-32 p-2">

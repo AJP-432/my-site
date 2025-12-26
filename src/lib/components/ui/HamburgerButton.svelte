@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils.js';
 
-	let { ...props } = $props();
+	let { class: className, ...props }: { class?: string } = $props();
 </script>
 
-<Button variant="outline" size="icon" class="p-2" {...props}>
+<span class={cn('inline-flex items-center justify-center', className)} {...props}>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="24"
@@ -22,4 +22,4 @@
 		<line x1="4" x2="20" y1="18" y2="18" />
 	</svg>
 	<span class="sr-only">Open menu</span>
-</Button>
+</span>
