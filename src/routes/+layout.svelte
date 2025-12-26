@@ -4,6 +4,8 @@
 	import { ModeWatcher } from 'mode-watcher';
 	// Custom cursor; see https://www.npmjs.com/package/curseur
 	import { Cursor } from 'curseur';
+	// Vercel Analytics
+	import { inject } from '@vercel/analytics';
 	import { browser } from '$app/environment';
 	import isMobile from 'ismobilejs';
 
@@ -14,6 +16,8 @@
 	$effect(() => {
 		if (browser) {
 			isMobileDevice = isMobile(navigator.userAgent).any;
+			// Initialize Vercel Analytics
+			inject();
 		}
 	});
 </script>
