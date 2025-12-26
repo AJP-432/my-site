@@ -1,5 +1,5 @@
 ---
-mode: 'ask'
+mode: 'agent'
 ---
 
 # Svelte 5 Documentation
