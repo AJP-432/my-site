@@ -53,10 +53,16 @@
 	<div class="flex h-10 min-w-0 flex-1 items-center gap-3">
 		{#if loading}
 			<!-- Loading skeleton -->
-			<div class="bg-muted h-10 w-10 shrink-0 animate-pulse rounded-md"></div>
 			<div class="min-w-0 flex-1">
 				<div class="bg-muted mb-1.5 h-3 w-3/4 animate-pulse rounded"></div>
 				<div class="bg-muted h-2.5 w-1/2 animate-pulse rounded"></div>
+			</div>
+			<div class="bg-muted h-10 w-10 shrink-0 animate-pulse rounded-md"></div>
+			<!-- Static "silent" equalizer bars -->
+			<div class="flex h-4 items-end gap-0.5">
+				<span class="bg-muted h-[30%] w-0.5 rounded-full"></span>
+				<span class="bg-muted h-[30%] w-0.5 rounded-full"></span>
+				<span class="bg-muted h-[30%] w-0.5 rounded-full"></span>
 			</div>
 		{:else if data.isPlaying && data.albumImageUrl}
 			<!-- Now playing -->
@@ -66,11 +72,6 @@
 				rel="noopener noreferrer"
 				class="flex min-w-0 flex-1 items-center gap-3 transition-opacity hover:opacity-80"
 			>
-				<img
-					src={data.albumImageUrl}
-					alt={data.album || 'Album cover'}
-					class="h-10 w-10 shrink-0 rounded-md"
-				/>
 				<div class="min-w-0 flex-1">
 					<p class="text-foreground truncate text-sm font-medium">
 						{data.title}
@@ -79,6 +80,11 @@
 						{data.artist}
 					</p>
 				</div>
+				<img
+					src={data.albumImageUrl}
+					alt={data.album || 'Album cover'}
+					class="h-10 w-10 shrink-0 rounded-md"
+				/>
 				<!-- Animated equalizer bars -->
 				<div class="flex h-4 items-end gap-0.5">
 					<span class="equalizer-bar w-0.5 rounded-full bg-[#1DB954]"></span>
