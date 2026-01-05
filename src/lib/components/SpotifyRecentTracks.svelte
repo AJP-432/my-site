@@ -7,12 +7,28 @@
 	let loading = $state(true);
 	let intervalId: ReturnType<typeof setInterval>;
 
-	// Get display tracks - if playing, show current + 2 recent, otherwise show 3 recent
+	// Deduplicate tracks by songUrl
+	function deduplicateTracks(tracks: typeof data.recentTracks) {
+		const seen = new Set<string>();
+		return tracks.filter((track) => {
+			if (seen.has(track.songUrl)) return false;
+			seen.add(track.songUrl);
+			return true;
+		});
+	}
+
+	// Get display tracks - if playing, show current + 2 recent (excluding duplicates), otherwise show 3 recent
 	let displayTracks = $derived.by(() => {
+		const uniqueRecent = deduplicateTracks(data.recentTracks);
+
 		if (data.isPlaying && data.currentTrack) {
-			return [data.currentTrack, ...data.recentTracks.slice(0, 2)];
+			// Filter out the current track from recent tracks
+			const filteredRecent = uniqueRecent.filter(
+				(track) => track.songUrl !== data.currentTrack?.songUrl
+			);
+			return [data.currentTrack, ...filteredRecent.slice(0, 2)];
 		}
-		return data.recentTracks.slice(0, 3);
+		return uniqueRecent.slice(0, 3);
 	});
 
 	async function fetchSpotifyData() {
