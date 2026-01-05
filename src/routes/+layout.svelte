@@ -2,8 +2,8 @@
 	import '../app.css';
 	// shadcn-svelte dark mode
 	import { ModeWatcher } from 'mode-watcher';
-	// Custom cursor; see https://www.npmjs.com/package/curseur
-	import { Cursor } from 'curseur';
+	// Custom cursor
+	import CustomCursor from '$lib/components/CustomCursor.svelte';
 	// Vercel Analytics
 	import { inject } from '@vercel/analytics';
 	import { browser } from '$app/environment';
@@ -11,11 +11,13 @@
 
 	let { children } = $props();
 
-	let isMobileDevice = $state(false);
+	// Start as undefined to prevent flash - cursor only shows after we confirm it's desktop
+	let showCursor = $state(false);
 
 	$effect(() => {
 		if (browser) {
-			isMobileDevice = isMobile(navigator.userAgent).any;
+			const isMobileDevice = isMobile(navigator.userAgent).any;
+			showCursor = !isMobileDevice;
 			// Initialize Vercel Analytics
 			inject();
 		}
@@ -23,7 +25,7 @@
 </script>
 
 <ModeWatcher />
-{#if !isMobileDevice}
-	<Cursor color="white" mixBlendMode="exclusion" size={12} />
+{#if showCursor}
+	<CustomCursor />
 {/if}
 {@render children()}
