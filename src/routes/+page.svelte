@@ -7,7 +7,7 @@
 <div class="flex h-screen flex-col">
 	<Header sections={['about']} />
 
-	<main class="flex-1 overflow-hidden">
+	<main class="scrollbar-hidden flex-1 overflow-y-auto">
 		<About />
 	</main>
 
