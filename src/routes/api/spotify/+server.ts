@@ -8,6 +8,7 @@ import {
 
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing';
+const RECENTLY_PLAYED_ENDPOINT = 'https://api.spotify.com/v1/me/player/recently-played?limit=3';
 
 async function getAccessToken(): Promise<{ access_token: string } | null> {
 	const basic = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64');
@@ -40,35 +41,73 @@ async function getNowPlaying(accessToken: string) {
 	});
 }
 
+async function getRecentlyPlayed(accessToken: string) {
+	return fetch(RECENTLY_PLAYED_ENDPOINT, {
+		headers: {
+			Authorization: `Bearer ${accessToken}`
+		}
+	});
+}
+
+import type { SpotifyTrack } from '$lib/types/spotify';
+
 export const GET: RequestHandler = async () => {
 	try {
 		const tokenResult = await getAccessToken();
 		if (!tokenResult) {
-			return json({ isPlaying: false });
+			return json({ isPlaying: false, recentTracks: [] });
 		}
 		const { access_token } = tokenResult;
-		const response = await getNowPlaying(access_token);
 
-		if (response.status === 204 || response.status > 400) {
-			return json({ isPlaying: false });
+		// Fetch now playing and recently played
+		const [nowPlayingResponse, recentlyPlayedResponse] = await Promise.all([
+			getNowPlaying(access_token),
+			getRecentlyPlayed(access_token)
+		]);
+
+		let isPlaying = false;
+		let currentTrack: SpotifyTrack | null = null;
+
+		// Check if currently playing
+		if (nowPlayingResponse.status !== 204 && nowPlayingResponse.status <= 400) {
+			const song = await nowPlayingResponse.json();
+			if (song.item && song.is_playing) {
+				isPlaying = true;
+				currentTrack = {
+					title: song.item.name,
+					artist: song.item.artists.map((artist: { name: string }) => artist.name).join(', '),
+					album: song.item.album.name,
+					albumImageUrl: song.item.album.images[0]?.url,
+					songUrl: song.item.external_urls.spotify
+				};
+			}
 		}
 
-		const song = await response.json();
-
-		if (!song.item) {
-			return json({ isPlaying: false });
+		// Get recently played tracks
+		const recentTracks: SpotifyTrack[] = [];
+		if (recentlyPlayedResponse.ok) {
+			const recentData = await recentlyPlayedResponse.json();
+			if (recentData.items) {
+				for (const item of recentData.items) {
+					const track = item.track;
+					recentTracks.push({
+						title: track.name,
+						artist: track.artists.map((artist: { name: string }) => artist.name).join(', '),
+						album: track.album.name,
+						albumImageUrl: track.album.images[0]?.url,
+						songUrl: track.external_urls.spotify
+					});
+				}
+			}
 		}
 
 		return json({
-			isPlaying: song.is_playing,
-			title: song.item.name,
-			artist: song.item.artists.map((artist: { name: string }) => artist.name).join(', '),
-			album: song.item.album.name,
-			albumImageUrl: song.item.album.images[0]?.url,
-			songUrl: song.item.external_urls.spotify
+			isPlaying,
+			currentTrack,
+			recentTracks
 		});
 	} catch (error) {
 		console.error('Spotify API error:', error);
-		return json({ isPlaying: false });
+		return json({ isPlaying: false, recentTracks: [] });
 	}
 };
